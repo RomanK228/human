@@ -1,5 +1,6 @@
 import random
 
+
 class Human:
     def __init__(self, name="Human", job=None, home=None, car=None):
         self.name = name
@@ -9,7 +10,7 @@ class Human:
         self.gladness = 50
         self.satiety = 50
         self.car = car
-
+        self.health = 100
     def get_home(self):
         self.home = House()
 
@@ -42,7 +43,7 @@ class Human:
                 self.shopping("fuel")
                 return
             else:
-        
+
                 self.to_repair()
                 return
         self.money += self.job.salary
@@ -76,13 +77,11 @@ class Human:
         print("Time to chill")
         self.gladness += 10
         self.home.mess += 10
-        
 
     def clean_home(self):
         print("Time to clean")
         self.gladness -= 10
         self.home.mess = 0
-        
 
     def to_repair(self):
         self.car.strength += 100
@@ -93,14 +92,19 @@ class Human:
         d = f"Today the {day} of {self.name}'s life"
         print(f"{d:=^50}\n")
         print(f"Money {self.money}")
-        
+        print(f"Gladness {self.gladness}")
         print(f"Food {self.home.food}")
         print(f"Mess {self.home.mess}")
         print(f"Fuel {self.car.fuel}")
-        print(f"Fuel {self.car.strength}")
-
+        print(f"Strength {self.car.strength}")
+        print(f"Satiety {self.satiety}")
+        print(f"Health {self.health}")
     def is_alive(self):
-        pass
+        if self.health <= 0:
+            print("Died")
+        else:
+            print("Alive")
+
 
     def live(self):
         pass
@@ -111,18 +115,20 @@ class Job:
         self.job = random.choice(list(job_list))
         self.salary = job_list[self.job]['salary']
         self.gladness_less = job_list[self.job]['gladness_less']
+
+
 class House:
     def __init__(self):
         self.mess = 0
         self.food = 0
+
+
 class Auto:
     def __init__(self, brands_of_car):
         self.brand = random.choice(list(brands_of_car))
         self.fuel = brands_of_car[self.brand]['fuel']
         self.strength = brands_of_car[self.brand]['strength']
         self.consumption = brands_of_car[self.brand]['consumption']
-
-
 
 
 brands_of_car = {"Opel": {"fuel": 20, 'strength': 80, "consumption": 8},
