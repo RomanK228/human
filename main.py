@@ -11,6 +11,7 @@ class Human:
         self.satiety = 50
         self.car = car
         self.health = 100
+
     def get_home(self):
         self.home = House()
 
@@ -99,15 +100,65 @@ class Human:
         print(f"Strength {self.car.strength}")
         print(f"Satiety {self.satiety}")
         print(f"Health {self.health}")
-    def is_alive(self):
-        if self.health <= 0:
-            print("Died")
-        else:
-            print("Alive")
 
+    def is_alive(self):
+        if self.gladness <= 0:
+            print("Depression...")
+            return False
+        if self.satiety < 0:
+            print("Dead")
+            return False
+        if self.money <= -100:
+            print("Bankrupt...")
+            return False
+
+        # if self.health <= 0:
+        #     print("Died")
+        # else:
+        #     print("Alive")
 
     def live(self):
-        pass
+        if not self.is_alive():
+            return False
+        if self.home is None:
+            print("Settled in the house")
+            self.get_home()
+        if self.job is None:
+            self.get_job()
+            print(f"I`m a job {self.job.job},salary {self.job.salary}")
+        if self.car is None:
+            self.get_car()
+            print(f"I bougth a car {self.car.brand}")
+        self.days_indexes(day)
+        dice = random.randint(1, 4)
+        if self.satiety < 20:
+            print("Time to eat")
+            self.eat()
+        elif self.gladness < 20:
+            if self.home.mess > 20:
+                print(f"I want to chill, but there is so much mess\nSo I will clean house")
+                self.clean_home()
+            else:
+                print("Time to chill")
+                self.chill()
+        elif self.money < 0:
+            print("Time to work")
+            self.work()
+        elif self.car.strength < 10:
+            print("Need to repair car")
+            self.to_repair()
+        elif dice == 1:
+            print("Time to chill")
+            self.chill()
+        elif dice == 2:
+            print("Time to work")
+            self.work()
+        elif dice == 3:
+            print(f"Time to clean house")
+            self.clean_home()
+        elif dice == 4:
+            print("Need to shopping")
+            self.shopping(manage="delicacies")
 
 
 class Job:
@@ -137,3 +188,8 @@ brands_of_car = {"Opel": {"fuel": 20, 'strength': 80, "consumption": 8},
 job_list = {"Java developer": {"salary": 50, "gladness_less": 10},
             "C++ developer": {"salary": 80, "gladness_less": 2},
             "Python developer": {"salary": 40, "gladness_less": 12}}
+
+hum = Human(name="Evfrat")
+for day in range(1, 365):
+    if hum.live(day) == False:
+        break
